@@ -1,0 +1,6 @@
+{
+  "name": "Le Fidélia Restaurant",
+  "description": "A premium landing page for Le Fidélia, an authentic Algerian restaurant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
