@@ -3,12 +3,19 @@
 import { motion } from 'motion/react';
 import { ChevronLeft, Calendar, Clock, Users, User, Phone, Mail, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
+import { Toaster, toast } from 'sonner';
 
 export default function ReservationPage() {
   const customEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast.success("Demande de réservation envoyée ! Nous vous contacterons sous peu pour confirmer.");
+  };
+
   return (
     <main className="min-h-screen bg-brand-white text-brand-text font-sans selection:bg-brand-green/20">
+      <Toaster position="top-center" />
       
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-black/5 py-4">
@@ -59,7 +66,7 @@ export default function ReservationPage() {
             transition={{ delay: 0.3, duration: 0.8, ease: customEase }}
             className="bg-brand-light/50 p-8 md:p-12 rounded-[2.5rem] shadow-sm border border-black/5"
           >
-            <form className="space-y-8" onSubmit={(e) => { e.preventDefault(); alert("Demande de réservation envoyée !"); }}>
+            <form className="space-y-8" onSubmit={handleSubmit}>
               
               <div className="grid md:grid-cols-2 gap-8">
                 {/* Name */}

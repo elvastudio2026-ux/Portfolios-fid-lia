@@ -1,0 +1,1 @@
+const https = require('https'); const imgs = ['samples/food/meat', 'samples/food/vegetables', 'samples/food/fruit', 'samples/food/breakfast']; let done = 0; imgs.forEach(id => https.get('https://res.cloudinary.com/dyw9qoe1j/image/upload/v1/'+id, res => { console.log(id, res.statusCode); if(++done===imgs.length) process.exit(0); }));

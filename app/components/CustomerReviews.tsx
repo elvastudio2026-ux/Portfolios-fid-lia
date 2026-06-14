@@ -5,7 +5,7 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Star, Search, Filter, ChevronDown, ChevronUp, Quote } from 'lucide-react';
 
-const CHANDELIER_IMAGE = "https://lh3.googleusercontent.com/gps-cs-s/APNQkAE1h3xLomC4qPhZ7WWZVEXOaC85cFpgFIWiZZ2x6aZ2gNFqT7RIyhvJzqqVf-2fR_ayGfk99dRYPB4jK8DxOl_mmy8v9tEh5krUoHS22f7ZpGwODNjpmaRyVkrbP94-ju-AWZSbPdUBlaY=w408-h306-k-no";
+const CHANDELIER_IMAGE = "https://res.cloudinary.com/dyw9qoe1j/image/upload/f_auto,q_auto,w_1920,h_1080,c_fill,e_sepia:30/v1/samples/landscapes/beach-boat";
 
 
 const BASE_REVIEWS = [
@@ -62,9 +62,8 @@ export default function CustomerReviews() {
 
   return (
     <section ref={sectionRef} id="reviews" className="py-24 md:py-32 bg-white relative">
-      <div className="hidden lg:block absolute top-0 left-0 w-[45%] h-full rounded-r-[5rem] overflow-hidden opacity-40 z-0 pointer-events-none grayscale-[30%]">
-          <Image src={CHANDELIER_IMAGE} alt="Ambiance Fidélia" fill className="object-cover" referrerPolicy="no-referrer" />
-          <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/50 to-white"></div>
+      <div className="hidden lg:block absolute top-0 left-0 w-[45%] h-full rounded-r-[5rem] overflow-hidden z-0 pointer-events-none">
+          <Image src={CHANDELIER_IMAGE} alt="Ambiance Fidélia" fill className="object-cover" unoptimized referrerPolicy="no-referrer" />
       </div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">

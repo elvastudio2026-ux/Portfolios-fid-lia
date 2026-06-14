@@ -6,19 +6,19 @@ import { MapPin, Phone, Star, Instagram, Facebook, Clock, Quote, ChevronLeft, Ch
 import { useState, useEffect, useRef } from 'react';
 import CustomerReviews from './components/CustomerReviews';
 import FAQ from './components/FAQ';
+import Gallery from './components/Gallery';
 
-const HERO_IMAGE = "https://lh3.googleusercontent.com/gps-cs-s/APNQkAE1h3xLomC4qPhZ7WWZVEXOaC85cFpgFIWiZZ2x6aZ2gNFqT7RIyhvJzqqVf-2fR_ayGfk99dRYPB4jK8DxOl_mmy8v9tEh5krUoHS22f7ZpGwODNjpmaRyVkrbP94-ju-AWZSbPdUBlaY=w408-h306-k-no";
-
-const GALLERY_IMAGES = [
-  HERO_IMAGE,
-  HERO_IMAGE,
-  HERO_IMAGE,
-  HERO_IMAGE,
+const HERO_IMAGES = [
+  "https://res.cloudinary.com/dyw9qoe1j/image/upload/f_auto,q_auto,w_1920,h_1080,c_fill/1000000908_mivztq",
+  "https://res.cloudinary.com/dyw9qoe1j/image/upload/f_auto,q_auto,w_1920,h_1080,c_fill/v1/samples/people/kitchen-bar",
+  "https://res.cloudinary.com/dyw9qoe1j/image/fetch/f_auto,q_auto,w_1920,h_1080,c_fill/https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+  "https://res.cloudinary.com/dyw9qoe1j/image/fetch/f_auto,q_auto,w_1920,h_1080,c_fill/https://images.unsplash.com/photo-1504674900247-0877df9cc836",
 ];
 
 const MENU_ITEMS = [
   {
     category: "Entrées Signatures",
+    image: "https://res.cloudinary.com/dyw9qoe1j/image/fetch/f_auto,q_auto,w_800,h_500,c_fill/https://images.unsplash.com/photo-1544148103-0773bf10d330",
     items: [
       { name: "Bourek Annabi Premium", description: "Feuille de brick croustillante, viande de bœuf finement hachée, œuf coulant et persil frais", price: "900 DZD" },
       { name: "Hmiss Authentique", description: "Poivrons et tomates délicatement grillés au feu de bois, huile d'olive extra vierge de Kabylie", price: "700 DZD" }
@@ -26,6 +26,7 @@ const MENU_ITEMS = [
   },
   {
     category: "Plats Traditionnels",
+    image: "https://res.cloudinary.com/dyw9qoe1j/image/fetch/f_auto,q_auto,w_800,h_500,c_fill/https://images.unsplash.com/photo-1528605248644-14dd04022da1",
     items: [
       { name: "Couscous Royal Algérois", description: "Semoule fine travaillée à la main, légumes de saison, viande d'agneau fondante et poulet rôti", price: "2400 DZD" },
       { name: "Rechta Fait-Maison", description: "Nouilles artisanales exquises, poulet fermier, navets tendres, sauce blanche onctueuse à la cannelle", price: "1800 DZD" }
@@ -33,6 +34,7 @@ const MENU_ITEMS = [
   },
   {
     category: "Spécialités Braisées",
+    image: "https://res.cloudinary.com/dyw9qoe1j/image/upload/f_auto,q_auto,w_800,h_500,c_fill/v1/samples/food/pot-mussels",
     items: [
       { name: "Brochettes d'Agneau", description: "Marinade secrète aux épices douces, cuisson parfaite sur braise incandescente", price: "1500 DZD" },
       { name: "Daurade Royale Grillée", description: "Poisson frais du jour, farce d'herbes aromatiques, citron confit et huile d'olive", price: "2200 DZD" }
@@ -40,6 +42,7 @@ const MENU_ITEMS = [
   },
   {
     category: "Douceurs & Infusions",
+    image: "https://res.cloudinary.com/dyw9qoe1j/image/fetch/f_auto,q_auto,w_800,h_500,c_fill/https://images.unsplash.com/photo-1498654896293-37aacf113fd9",
     items: [
       { name: "Makroud El Louz", description: "Amandes ultra-fondantes, subtil parfum d'eau de fleur d'oranger, enrobage sucre glace", price: "400 DZD" },
       { name: "Thé à la Menthe Fraîche", description: "Préparation traditionnelle, servi très chaud avec ses pignons de pin torréfiés", price: "350 DZD" }
@@ -76,8 +79,7 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % GALLERY_IMAGES.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % HERO_IMAGES.length);
 
   // Auto-slide effect
   useEffect(() => {
@@ -166,8 +168,34 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-brand-light transform-gpu">
           <motion.div style={{ y: heroY }} className="absolute inset-0 z-0 origin-top transform-gpu">
-              <Image src={HERO_IMAGE} alt="Le Fidélia" fill className="object-cover object-center opacity-80" priority referrerPolicy="no-referrer" />
-              <div className="absolute inset-0 bg-white/80" />
+              <AnimatePresence mode="wait">
+                  <motion.div
+                      key={currentSlide}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 1.5, ease: "easeInOut" }}
+                      className="absolute inset-0"
+                  >
+                      <motion.div
+                          initial={{ scale: 1.1 }}
+                          animate={{ scale: 1 }}
+                          transition={{ duration: 6, ease: "easeOut" }}
+                          className="w-full h-full relative"
+                      >
+                          <Image 
+                            src={HERO_IMAGES[currentSlide]} 
+                            alt="Le Fidélia Restaurant" 
+                            fill 
+                            className="object-cover object-center opacity-80" 
+                            priority
+                            unoptimized
+                            referrerPolicy="no-referrer"
+                          />
+                      </motion.div>
+                  </motion.div>
+              </AnimatePresence>
+              <div className="absolute inset-0 bg-white/70" />
           </motion.div>
           
           <div className="relative z-10 text-center max-w-4xl mx-auto px-6 pt-16">
@@ -238,7 +266,7 @@ export default function Home() {
               
               <div className="relative">
                    <motion.div style={{ y: aboutImageY }} className="aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl relative group">
-                       <Image src={HERO_IMAGE} alt="Intérieur Le Fidélia" fill className="object-cover scale-110 group-hover:scale-100 transition-transform duration-[1.5s] ease-out" referrerPolicy="no-referrer" />
+                       <Image src="https://res.cloudinary.com/dyw9qoe1j/image/fetch/f_auto,q_auto,w_800,h_1000,c_fill/https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c" alt="Intérieur Le Fidélia" fill className="object-cover scale-110 group-hover:scale-100 transition-transform duration-[1.5s] ease-out" unoptimized referrerPolicy="no-referrer" />
                        <div className="absolute inset-0 bg-brand-green/0 group-hover:bg-brand-green/10 transition-colors duration-700" />
                    </motion.div>
                    <motion.div 
@@ -293,7 +321,17 @@ export default function Home() {
               <div className="grid lg:grid-cols-2 gap-x-16 gap-y-16">
                   {MENU_ITEMS.map((section, idx) => (
                       <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6, delay: idx * 0.1, ease: customEase }}
-                      className="bg-brand-white p-10 md:p-14 rounded-[2rem] shadow-sm border border-black/5 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group transform-gpu">
+                      className="bg-brand-white p-10 md:p-14 rounded-[2rem] shadow-sm border border-black/5 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group transform-gpu flex flex-col overflow-hidden">
+                          <div className="relative h-64 -mx-10 -mt-10 md:-mx-14 md:-mt-14 mb-10 overflow-hidden">
+                              <Image 
+                                src={section.image} 
+                                alt={section.category} 
+                                fill 
+                                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                unoptimized
+                                referrerPolicy="no-referrer"
+                              />
+                          </div>
                           <h3 className="font-serif text-3xl text-brand-text mb-10 flex items-center gap-6 group-hover:text-brand-green transition-colors duration-500">
                               {section.category}
                               <div className="h-px bg-brand-green/20 flex-1 group-hover:bg-brand-green/50 transition-colors duration-500"></div>
@@ -321,47 +359,10 @@ export default function Home() {
       <section id="gallery" className="py-24 md:py-32 bg-white overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 text-center mb-16 relative">
              <motion.span initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, ease: customEase }} className="text-brand-green font-medium tracking-widest uppercase text-sm mb-4 block">Notre Cadre</motion.span>
-             <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1, ease: customEase }} className="font-serif text-4xl md:text-5xl text-brand-text mb-6 font-medium">Une Ambiance Lumineuse</motion.h2>
-             <motion.p initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2, ease: customEase }} className="text-brand-text/70 text-lg font-light max-w-2xl mx-auto">Découvrez l&apos;élégance de nos salles pensées pour votre confort absolu.</motion.p>
+             <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1, ease: customEase }} className="font-serif text-4xl md:text-5xl text-brand-text mb-6 font-medium">L&apos;Expérience Visuelle</motion.h2>
+             <motion.p initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2, ease: customEase }} className="text-brand-text/70 text-lg font-light max-w-2xl mx-auto">Explorez la finesse de nos plats et le raffinement de notre espace.</motion.p>
           </div>
-
-          <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, ease: customEase }}
-              className="max-w-6xl mx-auto px-6 transform-gpu"
-          >
-              <div className="relative h-[400px] md:h-[600px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border border-black/5 bg-brand-light group transform-gpu">
-                  <AnimatePresence mode="wait">
-                      <motion.div
-                          key={currentSlide}
-                          initial={{ opacity: 0, scale: 1.05 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-                          className="absolute inset-0 transform-gpu"
-                      >
-                          <Image src={GALLERY_IMAGES[currentSlide]} alt={`Gallerie ${currentSlide + 1}`} fill className="object-cover" referrerPolicy="no-referrer" />
-                      </motion.div>
-                  </AnimatePresence>
-                  
-                  {/* Slider Controls */}
-                  <div className="absolute inset-x-0 bottom-8 flex justify-center z-20 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 translate-y-4 md:group-hover:translate-y-0 transform-gpu">
-                      <div className="flex items-center gap-6 bg-white/90 backdrop-blur-md px-6 py-3 rounded-full shadow-xl border border-black/5 transform-gpu">
-                          <button onClick={prevSlide} className="w-10 h-10 flex items-center justify-center rounded-full bg-brand-light text-brand-text hover:bg-brand-green hover:text-white transition-all shadow-sm duration-200 hover:scale-110 active:scale-95 transform-gpu">
-                              <ChevronLeft className="w-5 h-5" />
-                          </button>
-                          <div className="text-sm font-medium tracking-[0.2em] text-brand-text uppercase w-16 text-center">
-                              {currentSlide + 1} / {GALLERY_IMAGES.length}
-                          </div>
-                          <button onClick={nextSlide} className="w-10 h-10 flex items-center justify-center rounded-full bg-brand-light text-brand-text hover:bg-brand-green hover:text-white transition-all shadow-sm duration-200 hover:scale-110 active:scale-95 transform-gpu">
-                              <ChevronRight className="w-5 h-5" />
-                          </button>
-                      </div>
-                  </div>
-              </div>
-          </motion.div>
+          <Gallery />
       </section>
 
       {/* Testimonials */}

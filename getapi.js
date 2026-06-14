@@ -1,0 +1,1 @@
+const https = require('https'); https.get('https://collection.cloudinary.com/main.6c2764cea5ebbd93.js', res => { let data = ''; res.on('data', c => data += c); res.on('end', () => { const matches = data.match(/"[^"]*api[^"]*"/g); console.log(matches ? [...new Set(matches)] : 'No matches'); }); });

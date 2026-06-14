@@ -1,0 +1,1 @@
+const https = require('https'); const imgs = ['photo-1517248135467-4c7edcad34c4', 'photo-1550966871-3ed3cdb5ed0c', 'photo-1544148103-0773bf10d330']; let done = 0; imgs.forEach(id => https.get('https://res.cloudinary.com/dyw9qoe1j/image/fetch/w_10,h_10/https://images.unsplash.com/'+id, res => { console.log(id, res.statusCode); if(++done===imgs.length) process.exit(0); }));

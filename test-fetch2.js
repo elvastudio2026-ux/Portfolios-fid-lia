@@ -1,0 +1,1 @@
+const https = require('https'); https.get('https://res.cloudinary.com/dyw9qoe1j/image/fetch/w_800,h_600,c_fill,f_auto,q_auto/https://images.unsplash.com/photo-1517248135467-4c7edcad34c4', res => { console.log('FETCH2:', res.statusCode); process.exit(0); });
